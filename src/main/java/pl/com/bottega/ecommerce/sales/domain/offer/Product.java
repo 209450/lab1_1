@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Product {
+
     private String productId;
     private BigDecimal productPrice;
     private String productName;
@@ -22,15 +23,19 @@ public class Product {
     public String getProductId() {
         return productId;
     }
+
     public BigDecimal getProductPrice() {
         return productPrice;
     }
+
     public String getProductName() {
         return productName;
     }
+
     public Date getProductSnapshotDate() {
         return productSnapshotDate;
     }
+
     public String getProductType() {
         return productType;
     }

@@ -25,23 +25,21 @@ public class OfferItem {
     private Discount discount;
 
     public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
-                     int quantity) {
-        this(productId, productPrice, productName, productSnapshotDate, productType, quantity, null, null);
+            int quantity) {
+        this(new Product(productId, productPrice, productName, productSnapshotDate, productType), quantity, null);
     }
 
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
-                     int quantity, BigDecimal discount, String discountCause) {
-
+    public OfferItem(Product product, int quantity, Discount discount) {
+        this.product = product;
         this.quantity = quantity;
-        this.discount = new Discount(discountCause, discount);
-        product = new Product(productId, productPrice, productName, productSnapshotDate, productType);
+        this.discount = discount;
 
         BigDecimal discountValue = new BigDecimal(0);
         if (discount != null) {
-            discountValue = discountValue.subtract(discount);
+            discountValue = discountValue.subtract(discount.getDiscount());
         }
 
-        totalCost = new Money(productPrice.multiply(new BigDecimal(quantity)).subtract(discountValue));
+        this.totalCost = new Money(product.getProductPrice().multiply(new BigDecimal(quantity)).subtract(discountValue));
     }
 
     public Product getProduct() {
@@ -76,22 +74,19 @@ public class OfferItem {
         this.discount = discount;
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         return Objects.hash(product, quantity, totalCost, discount);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         OfferItem offerItem = (OfferItem) o;
-        return quantity == offerItem.quantity &&
-                Objects.equals(product, offerItem.product) &&
-                Objects.equals(totalCost, offerItem.totalCost) &&
-                Objects.equals(discount, offerItem.discount);
+        return quantity == offerItem.quantity && Objects.equals(product, offerItem.product) && Objects.equals(totalCost,
+                offerItem.totalCost) && Objects.equals(discount, offerItem.discount);
     }
-
 
     /**
      * @param item
@@ -131,7 +126,7 @@ public class OfferItem {
 
         BigDecimal max;
         BigDecimal min;
-        if (totalCost.getValue().compareTo(other.getTotalCost().getValue())>0) {
+        if (totalCost.getValue().compareTo(other.getTotalCost().getValue()) > 0) {
             max = totalCost.getValue();
             min = other.getTotalCost().getValue();
         } else {
