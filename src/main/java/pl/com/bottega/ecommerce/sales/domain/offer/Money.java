@@ -9,4 +9,12 @@ public class Money {
     public Money(BigDecimal value) {
         this.value = value;
     }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
 }
