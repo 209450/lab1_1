@@ -5,6 +5,12 @@ import java.math.BigDecimal;
 public class Discount {
     private String discountCause;
     private BigDecimal discount;
+    private Money value;
+
+    public Discount(String discountCause, BigDecimal discount) {
+        this.discountCause = discountCause;
+        this.discount = discount;
+    }
 
     public BigDecimal getDiscount() {
         return discount;

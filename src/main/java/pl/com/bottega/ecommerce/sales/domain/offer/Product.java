@@ -9,8 +9,15 @@ public class Product {
     private String productName;
     private Date productSnapshotDate;
     private String productType;
+    private Money price;
 
-
+    public Product(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType) {
+        this.productId = productId;
+        this.productPrice = productPrice;
+        this.productName = productName;
+        this.productSnapshotDate = productSnapshotDate;
+        this.productType = productType;
+    }
 
     public String getProductId() {
         return productId;
